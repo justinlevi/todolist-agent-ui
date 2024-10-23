@@ -102,17 +102,7 @@ export const deleteTodo = async (id: number): Promise<Todo> => {
     API_URL,
     gql`
       mutation DeleteTodo($id: Int!) {
-        deleteTodo(id: $id) {
-          id
-          title
-          completed
-          createdAt
-          dueDate
-          weight
-          parentId
-          children
-          tags
-        }
+        deleteTodo(id: $id)
       }
     `,
     { id }

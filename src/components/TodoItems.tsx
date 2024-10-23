@@ -37,6 +37,10 @@ export const TodoItems: React.FC<TodoItemsProps> = ({
 }) => {
   const formatDate = (date: string) => new Date(date).toLocaleString();
 
+  const findTodoById = (id: number): Todo | undefined => {
+    return todos.find((todo) => todo.id === id);
+  };
+
   return (
     <ul>
       {todos?.map((todo) => (
@@ -93,47 +97,23 @@ export const TodoItems: React.FC<TodoItemsProps> = ({
           {expandedTodos.includes(todo.id) && (
             <div className="mt-2 ml-6 text-sm text-gray-600">
               <p>• Created: {formatDate(todo.createdAt)}</p>
-              <p>• Updated: {formatDate(todo.updatedAt)}</p>
-              {todo.deadline && <p>• Deadline: {formatDate(todo.deadline)}</p>}
-              {todo.urgency !== undefined && <p>• Urgency: {todo.urgency}</p>}
-              {todo.importance !== undefined && (
-                <p>• Importance: {todo.importance}</p>
+              {todo.dueDate && <p>• Due Date: {formatDate(todo.dueDate)}</p>}
+              <p>• Weight: {todo.weight}</p>
+              {todo.parentId && (
+                <p>
+                  • Parent: {findTodoById(todo.parentId)?.title || "Unknown"}
+                </p>
               )}
-              {todo.estimatedTime !== undefined && (
-                <p>• Estimated Time: {todo.estimatedTime} hours</p>
-              )}
-              {todo.energyLevel !== undefined && (
-                <p>• Energy Level: {todo.energyLevel}</p>
-              )}
-              {todo.context && <p>• Context: {todo.context}</p>}
-              {todo.priority && <p>• Priority: {todo.priority}</p>}
-              {todo.impact !== undefined && <p>• Impact: {todo.impact}</p>}
-              {todo.effort !== undefined && <p>• Effort: {todo.effort}</p>}
-              {todo.category && <p>• Category: {todo.category}</p>}
-              {todo.value !== undefined && <p>• Value: {todo.value}</p>}
-              {todo.confidence !== undefined && (
-                <p>• Confidence: {todo.confidence}</p>
-              )}
-              {todo.reach !== undefined && <p>• Reach: {todo.reach}</p>}
-              {todo.assignee && <p>• Assignee: {todo.assignee}</p>}
-              {todo.status && <p>• Status: {todo.status}</p>}
-              {todo.project && <p>• Project: {todo.project}</p>}
-              {todo.recurrence && <p>• Recurrence: {todo.recurrence}</p>}
-              {todo.timeSpent !== undefined && (
-                <p>• Time Spent: {todo.timeSpent} hours</p>
-              )}
-              {todo.customerSatisfaction !== undefined && (
-                <p>• Customer Satisfaction: {todo.customerSatisfaction}</p>
-              )}
-              {todo.quadrant && <p>• Quadrant: {todo.quadrant}</p>}
-              {todo.sequence !== undefined && (
-                <p>• Sequence: {todo.sequence}</p>
+              {todo.children.length > 0 && (
+                <p>
+                  • Children:{" "}
+                  {todo.children
+                    .map((childId) => findTodoById(childId)?.title || "Unknown")
+                    .join(", ")}
+                </p>
               )}
               <p>
-                • Tags:{" "}
-                {todo.tags && todo.tags.length > 0
-                  ? todo.tags.map((tag) => tag.name).join(", ")
-                  : "NONE"}
+                • Tags: {todo.tags.length > 0 ? todo.tags.join(", ") : "NONE"}
               </p>
             </div>
           )}

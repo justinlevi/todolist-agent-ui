@@ -55,13 +55,16 @@ export const TodoList: React.FC = () => {
 
   return (
     <div className="max-w-lg mx-auto">
-      <span className="text-sm text-gray-500">Switch mode to:</span>
-      <a
-        onClick={() => setIsMagicalMode(!isMagicalMode)}
-        className="px-3 py-1 text-sm text-blue-300 cursor-pointer hover:text-blue-500"
-      >
-        {isMagicalMode ? "🥱" : "✨ 🦄 ✨"}
-      </a>
+      <span className="text-sm text-gray-500">
+        Switch to{" "}
+        <a
+          onClick={() => setIsMagicalMode(!isMagicalMode)}
+          className="px-1py-1 text-sm text-blue-300 cursor-pointer hover:text-blue-500"
+        >
+          {isMagicalMode ? "🥱" : "✨ 🦄 ✨"}
+        </a>{" "}
+        mode
+      </span>
 
       {isMagicalMode ? (
         <>
